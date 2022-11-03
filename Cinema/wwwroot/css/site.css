@@ -1,0 +1,76 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.cinema{
+    display:flex;
+    flex-direction:row;
+}
+
+.cinema-1 {
+    background-color: rgba(95,161,216,255);
+    font-size: 20px;
+    color: white;
+}
+.ContainerImagem {
+    font-size: 25px;
+    border:none;
+}
+
+.ContainerImagem:hover {
+    background-color: rgba(95,161,216,255);
+}
+
+.imagem {
+    object-fit: cover;
+    height: 25px;
+    width: 25px;
+}
+
+.imagem-bg {
+    object-fit: cover;
+    height: 40px;
+    width: 40px;
+}
+.font_segoe {
+    font-family:'Segoe Print';
+    font-size: 30px;
+}
+
+.logar {
+    background-color: rgba(95,161,216,255);
+    color: white;
+
+}
+
+.inputlogar {
+    border-color: rgba(95,161,216,255);
+    color: rgba(95,161,216,255);
+}
+
+.inputlogar::placeholder {
+    color: rgba(95,161,216,255);
+}
+
+.logincor {
+    background-color: azure;
+}
+
+.padraoTabela {
+    color: rgba(95,161,216,255);
+}

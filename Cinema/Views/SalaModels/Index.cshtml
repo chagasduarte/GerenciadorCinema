@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Cinema.Models.SalaModel>
+
+@{
+    ViewData["Title"] = "Salas";
+}
+
+<h1>Salas</h1>
+
+<table id="table-salas" class="table inputlogar padraoTabela">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Qtd_Assentos)
+            </th>
+            
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nome)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Qtd_Assentos)
+            </td>
+            
+        </tr>
+}
+    </tbody>
+</table>

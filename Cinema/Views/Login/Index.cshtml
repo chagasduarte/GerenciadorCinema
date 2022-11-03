@@ -1,0 +1,40 @@
+﻿@model UsuarioModel;
+@{
+    Layout = "_LayoutLogin";
+    ViewData["Title"] = "Login";
+}
+
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+		<button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+		@TempData["MensagemErro"]
+	</div>
+}
+<form asp-controller="Login" asp-action="Entrar" method="post">
+	<div class="m-3 row">
+		<div class="col justify-content-center align-items-center">
+			<img class="imagem-bg inputlogar" src="~/Imagens/cinemalogin.png" />
+		</div>
+		<div class="col justify-content-center align-items-center">
+			<h class="font_segoe inputlogar">Cinema</h>
+		</div>
+		
+	</div>
+
+	<div class="m-3">
+		<label for="userLogin" class="inputlogar">Usuário</label>
+		<input type="text" asp-for="Login" class="form-control inputlogar" id="userLogin" aria-label="Usuário" placeholder="Usuário">
+		@Html.ValidationMessageFor(x => x.Login)
+	</div>
+ 
+	<div class="m-3">
+		<label for="userPassword" class="inputlogar">Senha</label>
+		<input type="password" asp-for="Senha" class="form-control inputlogar" id="userPassword" aria-label="Senha" placeholder="Senha">
+		@Html.ValidationMessageFor(x => x.Senha)
+	</div>
+	<div class="d-grid m-3">
+		<input type="submit" value="Logar" class="border-0 btn logar" >
+	</div>
+
+</form>
