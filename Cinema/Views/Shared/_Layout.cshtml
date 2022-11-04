@@ -11,19 +11,20 @@
 
 </head>
 
-<body>
- 
+<body class="h-100">
+    @using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
     <header>
         <nav class="cinema-1 shadow">
             <div class="ContainerImagem">
-                <div class="d-flex flex-row mb-3">
+                <div class="d-flex flex-row mb-3 position-relative">
                     <div class="p-2">
                         <img class="imagem-bg" src="~/Imagens/cinema (1).png" />
                     </div>
                     <div class="p-2">
                         <h class="font_segoe">Cinema</h>
                     </div>
-                    <a class="p-2 flex-row" asp-controller="Login" asp-action="Sair">
+                    <a class="p-2 position-absolute top-0 end-0 d-flex flex-row mb-3" asp-controller="Login" asp-action="Sair">
                     <div class="p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-power" viewBox="0 0 16 16">
                             <path d="M7.5 1v7h1V1h-1z" />
@@ -40,8 +41,11 @@
     <div class="cinema m-1">
         <div class="d-flex flex-column flex-shrink-0 p-3 bg-light col" style="width: 280px;">
             <a href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none">
-                <svg class="bi pe-none me-2" width="40" height="32"><use xlink:href="#Usuario" /></svg>
-                <span class="fs-4"></span>
+                @{
+                   string user =  new Cinema.Helper.Sessao(HttpContextAccessor).BuscarSessaoUsuario().Login;
+                }
+                <div class="h-25">@user.ToUpper()</div>
+                
             </a>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">

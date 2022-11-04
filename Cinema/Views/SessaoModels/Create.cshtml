@@ -1,10 +1,13 @@
-﻿@model Cinema.Models.SessaoModel
+﻿@using Cinema.Controllers.ModelsController
+@using Cinema.Dados
+@using Microsoft.EntityFrameworkCore
+@model Cinema.Models.SessaoModel
 
 @{
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+<h1>Adicionar Sessão</h1>
 
 <h4>SessaoModel</h4>
 <hr />
@@ -13,27 +16,27 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id_Filme" class="control-label"></label>
+                <label asp-for="Id_Filme" class="control-label">Filme</label>
                 <input asp-for="Id_Filme" class="form-control" />
                 <span asp-validation-for="Id_Filme" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Id_Sala" class="control-label"></label>
+                <label asp-for="Id_Sala" class="control-label">Sala</label>
                 <input asp-for="Id_Sala" class="form-control" />
                 <span asp-validation-for="Id_Sala" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Data" class="control-label"></label>
+                <label asp-for="Data" class="control-label">Data</label>
                 <input asp-for="Data" class="form-control" />
                 <span asp-validation-for="Data" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Hr_Inicio" class="control-label"></label>
+                <label asp-for="Hr_Inicio" class="control-label">Inicio</label>
                 <input asp-for="Hr_Inicio" class="form-control" />
                 <span asp-validation-for="Hr_Inicio" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Hr_Fim" class="control-label"></label>
+                <label asp-for="Hr_Fim" class="control-label">Final</label>
                 <input asp-for="Hr_Fim" class="form-control" />
                 <span asp-validation-for="Hr_Fim" class="text-danger"></span>
             </div>

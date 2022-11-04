@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Cinema.Dados;
 using Cinema.Models;
 using Cinema.Filters;
+using Microsoft.Data.SqlClient;
 
 namespace Cinema.Controllers.ModelsController
 {
@@ -156,18 +157,26 @@ namespace Cinema.Controllers.ModelsController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+
             if (_context.Filme == null)
             {
                 return Problem("Entity set 'BancoContext.Filme'  is null.");
             }
-            var filmesModel = await _context.Filme.FindAsync(id);
-            if (filmesModel != null)
+            try
             {
-                _context.Filme.Remove(filmesModel);
+                var filmesModel = await _context.Filme.FindAsync(id);
+                if (filmesModel != null)
+                {
+                    _context.Filme.Remove(filmesModel);
+                }
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (SqlException e)
+            {
+                throw new Exception("Esse filme não pode ser apagado", e);
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
         }
 
         private bool FilmesModelExists(int id)

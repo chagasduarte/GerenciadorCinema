@@ -74,6 +74,7 @@ namespace Cinema.Controllers.ModelsController
         // GET: SessaoModels/Create
         public IActionResult Create()
         {
+           
             return View();
         }
 

@@ -46,9 +46,7 @@ namespace Cinema.Controllers
                         TempData["MensagemErro"] = $"Usuario Inesistente";
                     }
                 }
-                
-                
-
+                                
                 return View("Index");
             }
             catch (Exception e)
