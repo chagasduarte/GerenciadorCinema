@@ -10,3 +10,5 @@ Apos clonar e criar o banco de acordo com as configurações acima, o sistema ir
 
 Caso prefira, no arquivo Cinema.bak está o backup do banco sqlserver gerado com as tabelas necessárias.
 
+Obs: Sistema ainda não concluido. Ainda Faltam alguns tópicos para finalizar a entrega.
+
