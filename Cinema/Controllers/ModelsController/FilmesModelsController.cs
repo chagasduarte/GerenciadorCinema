@@ -73,7 +73,8 @@ namespace Cinema.Controllers.ModelsController
                 }
                 else
                 {
-                    return RedirectToAction(nameof(Index));
+                    TempData["MensagemErro"] = "Filme já cadastrado";
+                    return View(filmesModel);
                 }
             }
             catch (Exception e)
