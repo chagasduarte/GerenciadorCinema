@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Cinema.Models
 {
@@ -14,6 +16,18 @@ namespace Cinema.Models
 		public decimal Valor_Ingresso { get; set; }
 		public string? Tipo_Animacao { get; set; }
 		public string? Tipo_Audio { get; set; }
+		[NotMapped]
+		public List<SelectListItem> Filmes 
+		{
+			get;
+			set;
+		}
+		[NotMapped]
+		public List<SelectListItem> Salas
+		{
+			get;
+			set;
+		}
 		
 	}
 }
