@@ -74,8 +74,26 @@ namespace Cinema.Controllers.ModelsController
         // GET: SessaoModels/Create
         public IActionResult Create()
         {
-           
-            return View();
+            SessaoModel sessao = new SessaoModel();
+            sessao.Filmes = new List<SelectListItem>();
+            sessao.Salas = new List<SelectListItem>();
+            List<FilmesModel> filmes = _context.Filme.ToList();
+            List<SalaModel> salas = _context.Sala.ToList();
+            
+            foreach (var filme in filmes)
+            {
+                SelectListItem item = new SelectListItem { Text = filme.Titulo, Value = filme.Id_Filme.ToString() };
+                
+                sessao.Filmes.Add(item);
+            }
+
+            foreach (var sala in salas)
+            {
+                SelectListItem item = new SelectListItem { Text = sala.Nome, Value = sala.Id_Sala.ToString() };
+                sessao.Salas.Add(item);
+            }
+            sessao.Data = DateTime.Today;
+            return View(sessao);
         }
 
         // POST: SessaoModels/Create
@@ -85,13 +103,12 @@ namespace Cinema.Controllers.ModelsController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Id_Filme,Id_Sala,Data,Hr_Inicio,Hr_Fim,Valor_Ingresso,Tipo_Animacao,Tipo_Audio")] SessaoModel sessaoModel)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(sessaoModel);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(sessaoModel);
+          
+            sessaoModel.Hr_Fim = sessaoModel.Hr_Inicio + _context.Filme.Where(x => x.Id_Filme == sessaoModel.Id_Filme).FirstOrDefault().Duracao;
+            _context.Add(sessaoModel);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+            
         }
 
         // GET: SessaoModels/Edit/5
