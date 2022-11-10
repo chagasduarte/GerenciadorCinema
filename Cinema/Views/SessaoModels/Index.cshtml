@@ -5,7 +5,13 @@
 }
 
 <h1>Sessões</h1>
-
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        @TempData["MensagemErro"]
+    </div>
+}
 <p>
     <a asp-action="Create">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-plus-circle bg" viewBox="0 0 16 16">

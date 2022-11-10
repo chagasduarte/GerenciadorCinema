@@ -176,8 +176,16 @@ namespace Cinema.Controllers.ModelsController
             {
                 return NotFound();
             }
-
-            return View(sessaoModel);
+            if (sessaoModel.Data >= DateTime.Today.AddDays(10)) 
+            {
+                return View(sessaoModel);
+            }
+            else
+            {
+                TempData["MensagemErro"] = "Faltam menos de 10 dias para esta sessão, não é possível exclui-la";
+                return RedirectToAction(nameof(Index));
+            }
+            
         }
 
         // POST: SessaoModels/Delete/5
