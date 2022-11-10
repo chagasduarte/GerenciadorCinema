@@ -5,7 +5,13 @@
 }
 
 <h1>Filmes</h1>
-
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        @TempData["MensagemErro"]
+    </div>
+}
 
 <table id="table-filmes" class="table inputlogar padraoTabela">
     <p>

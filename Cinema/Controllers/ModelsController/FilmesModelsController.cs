@@ -149,7 +149,11 @@ namespace Cinema.Controllers.ModelsController
             {
                 return NotFound();
             }
-
+            if (_context.Sessao.FirstOrDefaultAsync(x => x.Id_Filme == id) != null)
+            {
+                TempData["MensagemErro"] = "Existe uma Sessão programada com este filme, por isso ele não pode ser apagado";
+                return RedirectToAction(nameof(Index));
+            }
             return View(filmesModel);
         }
 
