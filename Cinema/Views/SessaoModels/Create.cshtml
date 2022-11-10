@@ -8,8 +8,13 @@
 }
 
 <h1>Adicionar Sessão</h1>
-
-<h4>SessaoModel</h4>
+@if (TempData["MensagemErro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        <button type="button" class="btn btn-danger btn-sm" data-bs-dismiss="alert" aria-label="Close"></button>
+        @TempData["MensagemErro"]
+    </div>
+}
 <hr />
 <div class="row">
     <div class="col-md-4">

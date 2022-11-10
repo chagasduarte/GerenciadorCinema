@@ -74,25 +74,8 @@ namespace Cinema.Controllers.ModelsController
         // GET: SessaoModels/Create
         public IActionResult Create()
         {
-            SessaoModel sessao = new SessaoModel();
-            sessao.Filmes = new List<SelectListItem>();
-            sessao.Salas = new List<SelectListItem>();
-            List<FilmesModel> filmes = _context.Filme.ToList();
-            List<SalaModel> salas = _context.Sala.ToList();
+            SessaoModel sessao = GetSessao(new SessaoModel());
             
-            foreach (var filme in filmes)
-            {
-                SelectListItem item = new SelectListItem { Text = filme.Titulo, Value = filme.Id_Filme.ToString() };
-                
-                sessao.Filmes.Add(item);
-            }
-
-            foreach (var sala in salas)
-            {
-                SelectListItem item = new SelectListItem { Text = sala.Nome, Value = sala.Id_Sala.ToString() };
-                sessao.Salas.Add(item);
-            }
-            sessao.Data = DateTime.Today;
             return View(sessao);
         }
 
@@ -103,8 +86,23 @@ namespace Cinema.Controllers.ModelsController
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Id_Filme,Id_Sala,Data,Hr_Inicio,Hr_Fim,Valor_Ingresso,Tipo_Animacao,Tipo_Audio")] SessaoModel sessaoModel)
         {
-          
+            var horarios = (from s in _context.Sessao.Where(x => x.Id_Sala == sessaoModel.Id_Sala)
+                            select new { s.Id_Sala, s.Hr_Inicio, s.Hr_Fim, s.Data }).ToList();
+
+           
             sessaoModel.Hr_Fim = sessaoModel.Hr_Inicio + _context.Filme.Where(x => x.Id_Filme == sessaoModel.Id_Filme).FirstOrDefault().Duracao;
+            foreach (var h in horarios)
+            {
+                if (sessaoModel.Data == h.Data) 
+                {
+                    if (h.Hr_Inicio < sessaoModel.Hr_Fim && h.Hr_Fim > sessaoModel.Hr_Inicio)
+                    {
+                        TempData["MensagemErro"] = "Conflito de horarios nessa sessão, mude o horario ou a data para poder proseguir";
+                        sessaoModel = GetSessao(new SessaoModel());
+                        return View(sessaoModel);
+                    } 
+                }
+            }
             _context.Add(sessaoModel);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
@@ -210,6 +208,30 @@ namespace Cinema.Controllers.ModelsController
         private bool SessaoModelExists(int id)
         {
           return _context.Sessao.Any(e => e.Id == id);
+        }
+
+        private SessaoModel GetSessao(SessaoModel sessao)
+        {
+            sessao.Filmes = new List<SelectListItem>();
+            sessao.Salas = new List<SelectListItem>();
+            List<FilmesModel> filmes = _context.Filme.ToList();
+            List<SalaModel> salas = _context.Sala.ToList();
+
+            foreach (var filme in filmes)
+            {
+                SelectListItem item = new SelectListItem { Text = filme.Titulo, Value = filme.Id_Filme.ToString() };
+
+                sessao.Filmes.Add(item);
+            }
+
+            foreach (var sala in salas)
+            {
+                SelectListItem item = new SelectListItem { Text = sala.Nome, Value = sala.Id_Sala.ToString() };
+                sessao.Salas.Add(item);
+            }
+            sessao.Data = DateTime.Today;
+
+            return sessao;
         }
     }
 }
