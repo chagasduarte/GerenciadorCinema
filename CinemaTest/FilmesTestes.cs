@@ -12,9 +12,11 @@ namespace CinemaTest
     public class FilmesTestes : IClassFixture<WebApplicationFactory<FilmesModelsController>>
     {
         private readonly WebApplicationFactory<FilmesModelsController> _factore;
+        private readonly HttpClient _client;
         public FilmesTestes(WebApplicationFactory<FilmesModelsController> factory)
         {
             _factore = factory;
+            _client = _factore.CreateClient();
         }
 
 
@@ -32,6 +34,20 @@ namespace CinemaTest
             var response = await client.GetAsync(url);
             int code = (int)response.StatusCode;
             Assert.Equal(200, code);
+        }
+
+
+        [Theory]
+        [InlineData("O Senhor dos Anéis: A Sociedade do Anél")]
+
+        public async Task TesteFilmes(string titulo)
+        {
+            var response = await _client.GetAsync("FilmesModels/Index");
+            var pageContent = await response.Content.ReadAsStringAsync();
+
+            var contentString = pageContent.ToString();
+
+            Assert.Contains(titulo, contentString);
         }
     }
 }

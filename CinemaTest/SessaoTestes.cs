@@ -32,6 +32,8 @@ namespace CinemaTest
             int code = (int)response.StatusCode;
             Assert.Equal(200, code);
         }
+
+
     }
 }
 
